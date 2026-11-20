@@ -48,3 +48,8 @@ if (typeof record.url !== 'string' || !videoAddressIsUsable(record.url)) {
 }
 mkdirSync(OUT_DIR, { recursive: true });
 writeFileSync(targetPath, contents);
+const writtenBack = readFileSync(targetPath, 'utf8');
+if (writtenBack !== contents) {
+  console.error(`${VIDEO_FILE} was not copied byte-for-byte to ${targetPath}`);
+  process.exit(1);
+}
